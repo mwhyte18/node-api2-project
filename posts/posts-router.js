@@ -22,7 +22,7 @@ router.post("/", (req, res) => {
 //add a post comment
 router.post("/:id/comments", (req, res) => {
   const { id } = req.params;
-  const theComment = { ...requestAnimationFrame.body, post_id: id };
+  const theComment = { ...req.body, post_id: id };
   if (id) {
     if (req.body.text) {
       Posts.insertComment(theComment).then(comment => {
@@ -92,6 +92,8 @@ router.get("/:id/comments", (req, res) => {
         .json({ error: "The comments information could not be retrieved." });
     });
 });
+
+//delete a post
 router.delete("/:id", (req, res) => {
   const id = req.params.id;
   Posts.remove(id)
@@ -108,7 +110,7 @@ router.delete("/:id", (req, res) => {
       res.status(500).json({ error: "The post could not be removed" });
     });
 });
-
+//edit a post
 router.put("/:id", (req, res) => {
   const id = req.params.id;
   const changes = req.body;
